@@ -226,6 +226,132 @@ body{font-family:var(--fb);background:var(--bg);color:var(--txt);min-height:100v
 @keyframes fadeD{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:none;}}
 #sb::-webkit-scrollbar{width:3px;}
 #sb::-webkit-scrollbar-thumb{background:var(--brd);border-radius:3px;}
+
+/* ═══════════════════════════════════════
+   MOBILE RESPONSIVE — max 768px
+═══════════════════════════════════════ */
+@media(max-width:768px){
+
+  /* App padding */
+  #app{padding:14px 16px 10px;height:100dvh;}
+
+  /* Login screen */
+  #login-screen h1{font-size:36px;}
+  #login-screen p{font-size:13px;max-width:280px;}
+  .login-features{flex-direction:column;gap:8px;align-items:center;}
+
+  /* Topbar — stack logo hidden, tabs centered */
+  #topbar{flex-wrap:wrap;gap:8px;}
+  .logo{font-size:15px;}
+  .m-tabs{order:3;width:100%;justify-content:center;}
+  .m-tab{flex:1;text-align:center;padding:6px 8px;}
+  .topbar-r{gap:6px;}
+  #user-name{display:none;} /* hide name on mobile, just show avatar */
+
+  /* Main area — allow scroll on mobile */
+  #main{justify-content:flex-start;padding-top:12px;overflow-y:auto;}
+
+  /* Home view */
+  #clock{font-size:clamp(56px,18vw,88px);}
+  #qt{font-size:13px;}
+  #date-d{margin-bottom:16px;}
+  #qa{margin-bottom:18px;}
+
+  /* Focus view */
+  #f-task{font-size:16px;margin-bottom:20px;}
+  #ring{width:170px;height:170px;}
+  #ring svg{width:170px;height:170px;}
+  #t-time{font-size:38px;}
+  .ctrls{margin-bottom:16px;}
+  .cb{width:40px;height:40px;font-size:13px;}
+  .cb.pri{width:48px;height:48px;font-size:15px;}
+
+  /* Ambient view */
+  #a-clk{font-size:clamp(60px,18vw,100px);}
+  #a-dt{margin-bottom:20px;}
+  .sg{max-width:100%;}
+  .sb{min-width:68px;padding:10px 10px;}
+
+  /* Bottom bar — make it a proper mobile tab bar */
+  #bbar{
+    position:fixed;bottom:0;left:0;right:0;
+    background:rgba(10,12,18,.96);
+    backdrop-filter:blur(20px);
+    border-top:1px solid var(--brd);
+    padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+    z-index:9;
+    animation:none;
+  }
+  .bb{font-size:10px;padding:6px 10px;}
+  /* Push main content up so bottom bar doesn't cover it */
+  #main{padding-bottom:70px;}
+
+  /* Sidebar — full width on mobile */
+  #sb{
+    width:100%;
+    top:auto;
+    bottom:0;
+    height:75vh;
+    border-left:none;
+    border-top:1px solid var(--brd);
+    border-radius:20px 20px 0 0;
+    transform:translateY(100%);
+    padding:20px 18px;
+  }
+  #sb.open{transform:translateY(0);}
+  /* Drag handle indicator */
+  #sb::before{
+    content:'';display:block;width:36px;height:4px;
+    background:var(--brd);border-radius:99px;
+    margin:0 auto 16px;
+  }
+
+  /* User menu position */
+  #umenu{top:auto;bottom:80px;right:16px;left:16px;min-width:unset;}
+
+  /* Leaderboard rows */
+  .lb-sub{display:none;} /* hide sub on tiny screens */
+
+  /* Share card — smaller */
+  #sc{height:auto;}
+
+  /* Ambient sound grid */
+  #amb-v .sg{gap:6px;}
+  #amb-v .sb{min-width:64px;font-size:9px;}
+
+  /* Toast position above bottom bar */
+  #toast{bottom:90px;}
+
+  /* Orbs smaller on mobile */
+  #orb1{width:300px!important;height:300px!important;}
+  #orb2{width:200px!important;height:200px!important;}
+}
+
+/* Extra small phones */
+@media(max-width:380px){
+  #clock{font-size:52px;}
+  .m-tab{font-size:10px;padding:5px 6px;}
+  .bb{font-size:9px;padding:5px 8px;}
+  #a-clk{font-size:56px;}
+}
+
+/* Landscape mobile */
+@media(max-height:500px) and (orientation:landscape){
+  #app{padding:8px 20px 6px;}
+  #clock{font-size:42px;}
+  #main{flex-direction:row;gap:24px;align-items:center;justify-content:center;flex-wrap:wrap;}
+  #ring{width:150px;height:150px;margin-bottom:0;}
+  #ring svg{width:150px;height:150px;}
+  #t-time{font-size:32px;}
+  #f-task{margin-bottom:12px;}
+  .ctrls{margin-bottom:12px;}
+  #bbar{padding:6px 16px;}
+}
+
+/* Safe area for iPhone notch */
+@supports(padding:max(0px)){
+  #app{padding-top:max(14px,env(safe-area-inset-top));}
+}
 </style>
 </head>
 <body>
@@ -433,8 +559,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--txt);min-height:100v
 // !! CONFIGURE YOUR SUPABASE KEYS HERE !!
 // Get these from: supabase.com → your project → Settings → API
 // ═══════════════════════════════════════════════════════════
-const SUPABASE_URL = 'https://mbujfqsahtarmiweokjm.supabase.co'
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1idWpmcXNhaHRhcm1pd2Vva2ptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NTYwMTYsImV4cCI6MjA4OTQzMjAxNn0.Nth2ounHYr-XMuGy-e-4G41KNqriuZLW5YNSpnq_clM';
+const SUPABASE_URL = 'https://YOUR_PROJECT_ID.supabase.co';
+const SUPABASE_KEY = 'YOUR_ANON_PUBLIC_KEY';
 
 const supa = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
